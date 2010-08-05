@@ -1,3 +1,0 @@
-<rewrite-dispatch xmlns="http://caucho.com/ns/resin" xmlns:resin="http://caucho.com/ns/resin/core">
-   <forward regexp="^/([\\w/]*?/build/(?:\\w+?))(?:/e_(\\d+))?(?:/r_(?:\\d+))?.((?:js)|(?:css))(?:\?.*)?$" target="/$1.$3.xml?expire=$2"/>
-</rewrite-dispatch>
