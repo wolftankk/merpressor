@@ -32,7 +32,7 @@ $i = 0;
 if(strcasecmp($type, 'css') == 0){
 	$mimeType = 'text/css';
 	foreach($files as $value){
-		$output[$i++] = '@import "'.$prefix.$value->nodeValue.'"';
+		$output[$i++] = '@import url("'.$prefix.$value->nodeValue.'");';
 	}
 }
 else{
