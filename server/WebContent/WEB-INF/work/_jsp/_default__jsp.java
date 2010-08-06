@@ -93,12 +93,12 @@ public class _default__jsp extends com.caucho.jsp.JavaPage{
     String resourcePath = loader.getResourcePathSpecificFirst();
     mergePath.addClassPath(resourcePath);
     com.caucho.vfs.Depend depend;
-    depend = new com.caucho.vfs.Depend(appDir.lookup("default.jsp"), 557143642614921796L, false);
+    depend = new com.caucho.vfs.Depend(appDir.lookup("default.jsp"), 280241863517066567L, false);
     com.caucho.jsp.JavaPage.addDepend(_caucho_depends, depend);
   }
 
   private final static char []_jsp_string0;
   static {
-    _jsp_string0 = "\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n<title>Welcome to Merpressor!</title>\r\n<style type=\"text/css\">\r\nbody{text-align:center;padding:32px 16px;margin:0;}\r\n</style>\r\n</head>\r\n<body>\r\n	<h2>Welcome to Merpressor!</h2>\r\n	<hr />\r\n	<p>\r\n		Merpressor 1.0.0, 05 Aug 2010\r\n	</p>\r\n</body>\r\n</html>".toCharArray();
+    _jsp_string0 = "\r\n<!doctype html>\r\n<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n<title>Welcome to Merpressor!</title>\r\n<style type=\"text/css\">\r\nbody{text-align:center;padding:32px 16px;margin:0;}\r\n</style>\r\n</head>\r\n<body>\r\n	<h2>Welcome to Merpressor!</h2>\r\n	<hr />\r\n	<p>\r\n		Merpressor 1.0.0, 05 Aug 2010\r\n	</p>\r\n</body>\r\n</html>".toCharArray();
   }
 }

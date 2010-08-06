@@ -12,7 +12,6 @@ package com.yahoo.platform.yui.compressor;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
