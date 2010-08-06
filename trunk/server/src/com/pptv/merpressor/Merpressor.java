@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.Vector;
+
 import javax.management.timer.Timer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -54,35 +56,54 @@ public class Merpressor extends HttpServlet
 		// config file
 		String config = request.getParameter("config");
 
-		// file type
+		// file type and mime-type
 		String type = request.getParameter("type");
-
-		// expires, default expires: 1 hour
-		int expires = 3600;
-		if (!request.getParameter("expires").isEmpty())
-		{
-			expires = Integer.parseInt(request.getParameter("expires")) * 60;
-		}
-
-		// parse config file
-
-		FileList list = new FileListParser().Parse(home + config, home);
-
-		// config file not found
-		if (list == null)
-		{
-			response.setHeader("File-Not-Found", config);
-			response.setStatus(404);
-			return;
-		}
-
-		// set mime-type and charset
 		String mimeType = "application/x-javascript";
 		if (type.equalsIgnoreCase("css"))
 		{
 			mimeType = "text/css";
 		}
-		response.setHeader("Content-Type", mimeType + "; charset=" + list.encoding);
+
+		// expires, default expires: 1 hour
+		int expires = 3600;
+		String expiresStr = request.getParameter("expires");
+		if (expiresStr != null && !expiresStr.equalsIgnoreCase(""))
+		{
+			expires = Integer.parseInt(request.getParameter("expires")) * 60;
+		}
+
+		String encoding = "utf-8";
+		Vector<String> files = new Vector<String>();
+		// a real javascript or css file
+		if (config == null || config.equalsIgnoreCase(""))
+		{
+			String file = root + request.getParameter("path");
+			encoding = SimpleCharsetDetector.instance().getFileEncoding(file);
+			if(encoding.equalsIgnoreCase("")){
+				encoding = "utf-8";
+			}
+			files.add(file);
+
+			response.setHeader("File-Path", file);
+		}
+		// a config file
+		else
+		{
+			// parse config file
+			FileList list = new FileListParser().Parse(home + config, home);
+			// config file not found
+			if (list == null)
+			{
+				response.setHeader("File-Not-Found", config);
+				response.setStatus(404);
+				return;
+			}
+			else
+			{
+				encoding = list.encoding;
+				files = list.files;
+			}
+		}		
 
 		// calculate expires header
 		Calendar cal = Calendar.getInstance();
@@ -91,14 +112,16 @@ public class Merpressor extends HttpServlet
 		Locale local = Locale.US;
 		DateFormat fmt = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z", new DateFormatSymbols(local));
 		fmt.setTimeZone(TimeZone.getTimeZone("GMT"));
-		
-		// set expires header
+
+		// set header
 		response.setHeader("Cache-Control", "max-age=" + Integer.toString(expires, 10));
 		response.setHeader("Expires", fmt.format(expTime));
+		response.setHeader("Content-Type", mimeType + "; charset=" + encoding);
 
+		// merge and compress
 		PrintWriter writer = response.getWriter();
-		
-		InputStreamReader inReader = new InputStreamReader(new SequenceInputStream(new InputStreamEnumerator(list.files)), list.encoding);
+
+		InputStreamReader inReader = new InputStreamReader(new SequenceInputStream(new InputStreamEnumerator(files)), encoding);
 		int linebreakpos = -1;
 		boolean verbose = false;
 		if (type.equalsIgnoreCase("js"))
@@ -142,11 +165,16 @@ public class Merpressor extends HttpServlet
 		}
 		else if (type.equalsIgnoreCase("css"))
 		{
+			try{
 			CssCompressor compressor = new CssCompressor(inReader);
 			// Close the input stream first, and then open the output stream,
 			// in case the output file should override the input file.
 
 			writer.print(compressor.compress(linebreakpos));
+			}
+			catch(Exception e){
+				//
+			}
 		}
 		inReader.close();
 		inReader = null;

@@ -7,20 +7,17 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 
 /*
- * @Name: SimpleCharsetDetector.java
- * @Author: Fdream
+ * @Name: SimpleCharDetect.java 
+ * @Author: Fdream 
  * @Email: fdream@live.com
- * @Website: http://fdream.net
+ * @Website: http://ooboy.net 
  * @Version: 
- * @Creation: 2010-8-3 PM01:55:38
+ * @Creation: Dec 18, 2008 10:30:58 AM
  */
 
-/**
- * @author Administrator
- *
- */
 public class SimpleCharsetDetector
 {
+
 	private static SimpleCharsetDetector _instance = null;
 
 	/**
@@ -99,15 +96,15 @@ public class SimpleCharsetDetector
 		// FE、FF（Unicode big endian）,EF、BB、BF（UTF-8）
 		if (flag1 == 255 && flag2 == 254)
 		{
-			encode = "unicode";
+			encode = "Unicode";
 		}
 		else if (flag1 == 254 && flag2 == 255)
 		{
-			encode = "utf-16";
+			encode = "UTF-16";
 		}
 		else if (flag1 == 239 && flag2 == 187 && flag3 == 191)
 		{
-			encode = "utf-8";
+			encode = "UTF-8";
 		}
 		return encode;
 	}
@@ -136,4 +133,5 @@ public class SimpleCharsetDetector
 
 		return isr;
 	}
+
 }

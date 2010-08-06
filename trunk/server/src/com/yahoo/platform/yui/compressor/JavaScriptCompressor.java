@@ -12,7 +12,6 @@ import org.mozilla.javascript.*;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
