@@ -1,8 +1,8 @@
 <web-app xmlns="http://caucho.com/ns/resin" xmlns:resin="http://caucho.com/ns/resin/core">
   <rewrite-dispatch>
-    <forward regexp="^/([\w/]*?/)(build/(?:.*?))(?:/e_(\d+))?(?:/v_(?:\d+))?.((?:js)|(?:css))(?:\?.*)?$" target="/merpress?home=$1&amp;config=$2.$4.xml&amp;type=$4&amp;expires=$3"/>
-    <forward regexp="^/([\w/]*?/)build/(?:.*?)(?:/e_(?:\d+))?(?:/v_(?:\d+))?(/.*?.(?:(?!js)|(?!css))(?:\?.*)?$)" target="/$1$2" />
-    <forward regexp="^/([\w/]*?/)build/(.*?.(?:(?!js)|(?!css))(?:\?.*)?$)" target="/$1$2" />
-    <forward regexp="^/(.*?.((?:js)|(?:css)))(?:\?.*)?$" target="/merpress?path=$1&amp;type=$2" />
+    <forward regexp="^/([\w/]*?/)(build/(?:.*?))(?:/e_(\d+))?(?:/v_(?:\d+))?\.((?:js)|(?:css))(?:\?.*)?$" target="/merpress?home=$1&amp;config=$2.$4.xml&amp;type=$4&amp;expires=$3"/>
+    <forward regexp="^/([\w/]*?/)build/(?:.*?)(?:/e_(?:\d+))?(?:/v_(?:\d+))?(/.*?\.(?:(?!js)|(?!css))(?:\?.*)?$)" target="/$1$2" />
+    <forward regexp="^/([\w/]*?/)build/(.*?\.(?:(?!js)|(?!css))(?:\?.*)?$)" target="/$1$2" />
+    <forward regexp="^/(.*?\.((?:js)|(?:css)))(?:\?.*)?$" target="/merpress?path=$1&amp;type=$2" />
   </rewrite-dispatch>
 </web-app>
