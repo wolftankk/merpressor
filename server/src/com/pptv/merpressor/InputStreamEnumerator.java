@@ -4,8 +4,10 @@
 package com.pptv.merpressor;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 /*
@@ -23,7 +25,7 @@ import java.util.Vector;
  */
 
 /**
- * @author Administrator
+ * 
  * 
  */
 public class InputStreamEnumerator implements Enumeration<FileInputStream>
@@ -40,15 +42,18 @@ public class InputStreamEnumerator implements Enumeration<FileInputStream>
 		return files.hasMoreElements();
 	}
 
-	public FileInputStream nextElement()
+	public FileInputStream nextElement() throws FileListException
 	{
+		String path = files.nextElement().toString();
+		
 		try
 		{
-			return new FileInputStream(files.nextElement().toString());
+			FileInputStream input = new FileInputStream(path);
+			return input;
 		}
 		catch (IOException e)
 		{
-			return null;
+			throw new FileListException(path);
 		}
 	}
 }
