@@ -65,7 +65,7 @@ public class Merpressor extends HttpServlet
 		}
 
 		// expires, default expires: 1 hour
-		int expires = 3600;
+		int expires = 3600*24*3;
 		String expiresStr = request.getParameter("expires");
 		if (expiresStr != null && !expiresStr.equalsIgnoreCase(""))
 		{
@@ -103,7 +103,18 @@ public class Merpressor extends HttpServlet
 				encoding = list.encoding;
 				files = list.files;
 			}
-		}		
+		}
+
+		// get streams
+		InputStreamReader inReader = null;
+		try{
+			inReader = new InputStreamReader(new SequenceInputStream(new InputStreamEnumerator(files)), encoding);
+		}
+		catch(FileListException e){
+			response.setHeader("File-Not-Found", e.path);
+			response.setStatus(404);
+			return;
+		}
 
 		// calculate expires header
 		Calendar cal = Calendar.getInstance();
@@ -121,7 +132,6 @@ public class Merpressor extends HttpServlet
 		// merge and compress
 		PrintWriter writer = response.getWriter();
 
-		InputStreamReader inReader = new InputStreamReader(new SequenceInputStream(new InputStreamEnumerator(files)), encoding);
 		int linebreakpos = -1;
 		boolean verbose = false;
 		if (type.equalsIgnoreCase("js"))
