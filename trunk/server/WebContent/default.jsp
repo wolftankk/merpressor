@@ -13,7 +13,7 @@ body{text-align:center;padding:32px 16px;margin:0;}
 	<h2>Welcome to Merpressor!</h2>
 	<hr />
 	<p>
-		Merpressor 1.0.0, 05 Aug 2010
+		Merpressor 1.0.3, 12 Jan. 2011
 	</p>
 </body>
 </html>
